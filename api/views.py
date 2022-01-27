@@ -29,3 +29,4 @@ class PeopleViewSet(mixins.CreateModelMixin,
                     GenericViewSet):
     queryset = People.objects.all()
     serializer_class = PeopleSerializer
+    lookup_field = 'iin'

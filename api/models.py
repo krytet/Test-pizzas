@@ -31,4 +31,4 @@ class Pizza(models.Model):
 
 
 class People(models.Model):
-    iin = models.CharField(max_length=12, verbose_name='ИИН')
+    iin = models.CharField(max_length=12, verbose_name='ИИН', unique=True)
