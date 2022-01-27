@@ -28,3 +28,7 @@ class Pizza(models.Model):
     pastry = models.CharField(max_length=128, verbose_name='Толщина теста')
     secret_ingredient = models.CharField(max_length=128,
                                          verbose_name='Секретный ингридиент')
+
+
+class People(models.Model):
+    iin = models.CharField(max_length=12, verbose_name='ИИН')

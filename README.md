@@ -31,3 +31,11 @@ Steps to run:
     "secret_ingredient": "клюква"
 }
 ```
+
+5) POST the request in the url http://127.0.0.1:8000/api/people/ for create people
+
+```json
+{
+    "iin": "YYMMDDy00000"
+}
+```

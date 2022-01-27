@@ -1,10 +1,12 @@
 from collections import OrderedDict
+from datetime import date
 
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
-from .models import Ingredients, Pizza
+from .models import Ingredients, People, Pizza
 
 User = get_user_model()
 
@@ -83,3 +85,22 @@ class PizzaSerializer(serializers.ModelSerializer):
         # передаем контекст для получения тикущего пользователя
         fields = PizzasShowSerializer(data, context=self.context)
         return OrderedDict(fields.data)
+
+
+class PeopleSerializer(serializers.ModelSerializer):
+    age = serializers.SerializerMethodField()
+
+    class Meta:
+        model = People
+        fields = ['iin', 'age']
+
+    # Получение возраста
+    def get_age(self, obj):
+        year = int(obj.iin[:2])
+        mounth = int(obj.iin[2:4])
+        day = int(obj.iin[4:6])
+        if int(obj.iin[6]) > 4:
+            year += 2000
+        else:
+            year += 1900
+        return relativedelta(date.today(), date(year, mounth, day)).years

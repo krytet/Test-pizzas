@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
-from .models import Pizza
+from .models import People, Pizza
 from .permissions import IsAuthorOrAuthOrReadOnly
-from .serializers import PizzaSerializer, UserSerializer
+from .serializers import PeopleSerializer, PizzaSerializer, UserSerializer
 
 User = get_user_model()
 
@@ -20,3 +21,11 @@ class PizzaViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(restaurant=self.request.user)
+
+
+class PeopleViewSet(mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
+                    mixins.ListModelMixin,
+                    GenericViewSet):
+    queryset = People.objects.all()
+    serializer_class = PeopleSerializer
